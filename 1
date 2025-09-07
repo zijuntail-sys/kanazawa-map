@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>近江市場｜早餐・海鮮・必買 互動地圖（含 SOKI Kanazawa）</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+  <style>
+    html, body, #map { height: 100%; margin: 0; }
+    .popup-title { font-weight: 700; font-size: 14px; }
+    .popup-body { font-size: 13px; line-height: 1.4; }
+    .badge { display:inline-block; padding:2px 6px; border-radius:6px; background:#f0f0f0; margin-left:6px; }
+  </style>
+</head>
+<body>
+<div id="map"></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script>
+  var map = L.map('map').setView([36.57435, 136.65600], 18);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  function popupHTML(p) {
+    return `<div class="popup">
+      <div class="popup-title">${p.name}<span class="badge">${p.category}</span></div>
+      <div class="popup-body">
+        <div><strong>重點：</strong>${p.special}</div>
+        <div><strong>營業：</strong>${p.hours}</div>
+        <div><a href="${p.maps}" target="_blank" rel="noopener">在 Google 地圖開啟</a></div>
+      </div>
+    </div>`;
+  }
+
+  const data = [{"name": "近江町市場（主入口）", "category": "市場入口・集合點", "special": "從這裡進入市場，向內走即達各攤與餐廳", "hours": "多數攤位 8:00–17:00（各店略有不同；早餐店更早）", "lat": 36.57435, "lon": 136.656, "maps": "https://www.google.com/maps?q=36.57435,136.65600"}, {"name": "Iki-iki Tei", "category": "早餐・海鮮丼/壽司", "special": "新鮮直送海鮮，人氣海鮮丼與壽司", "hours": "07:00 起（售完提早）", "lat": 36.5745, "lon": 136.65576, "maps": "https://www.google.com/maps?q=36.57450,136.65576"}, {"name": "Hyakumangoku Udon", "category": "早餐・烏龍麵", "special": "天婦羅烏龍麵、溫暖早餐首選", "hours": "08:00–約15:00（賣完即止；週日休）", "lat": 36.57415, "lon": 136.6557, "maps": "https://www.google.com/maps?q=36.57415,136.65570"}, {"name": "Poppo’s Onigiri", "category": "早餐・飯糰", "special": "20+ 口味飯糰，快速好帶走", "hours": "07:30–15:00（常提早售完）", "lat": 36.57428, "lon": 136.65553, "maps": "https://www.google.com/maps?q=36.57428,136.65553"}, {"name": "Kaidoya（醃製海鮮試吃）", "category": "伴手禮・試吃", "special": "魷魚泡菜、甜蝦鹹醬、海苔佃煮等可試吃", "hours": "09:00–17:00", "lat": 36.57442, "lon": 136.65544, "maps": "https://www.google.com/maps?q=36.57442,136.65544"}, {"name": "Shimada Suisan（生蠔/海膽）", "category": "海鮮現吃", "special": "能登生蠔現開、海膽現切", "hours": "09:00–16:30（售完即止）", "lat": 36.57456, "lon": 136.65592, "maps": "https://www.google.com/maps?q=36.57456,136.65592"}, {"name": "海鮮可樂餅攤", "category": "小吃", "special": "甜蝦可樂餅、蟹肉可樂餅現炸", "hours": "10:00–16:00（賣完即止）", "lat": 36.57406, "lon": 136.65587, "maps": "https://www.google.com/maps?q=36.57406,136.65587"}, {"name": "Kitagata Seika（北形青果）", "category": "地產蔬果", "special": "加賀蔬菜、五郎島金時地瓜等在地農產", "hours": "08:00–17:00（週三常休）", "lat": 36.5741, "lon": 136.65608, "maps": "https://www.google.com/maps?q=36.57410,136.65608"}, {"name": "SOKI Kanazawa", "category": "飯店・定位點", "special": "就在近江町市場旁（步行 1 分鐘），從車站約 15 分鐘", "hours": "櫃檯 24h（入住 15:00 起）", "lat": 36.57428, "lon": 136.65618, "maps": "https://www.google.com/maps?q=36.57428,136.65618"}];
+  data.forEach(function(p) {
+    L.marker([p.lat, p.lon]).addTo(map).bindPopup(popupHTML(p));
+  });
+</script>
+</body>
+</html>
